@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daqing.modules.stakeholderrelationship.dao.StakeholderRelationshipMapper">
+  <resultMap id="BaseResultMap" type="com.daqing.modules.stakeholderrelationship.model.StakeholderRelationship">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="company_stakeholder_link_id" jdbcType="BIGINT" property="companyStakeholderLinkId" />
+    <result column="source" jdbcType="BIGINT" property="source" />
+    <result column="target" jdbcType="BIGINT" property="target" />
+    <result column="is_data" jdbcType="INTEGER" property="isData" />
+    <result column="is_valid" jdbcType="INTEGER" property="isValid" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="relationship" jdbcType="VARCHAR" property="relationship" />
+    <result column="parent" jdbcType="INTEGER" property="parent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, company_stakeholder_link_id, source, target, is_data, is_valid, create_date, 
+    relationship,parent
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stakeholder_relationship
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from stakeholder_relationship
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.daqing.modules.stakeholderrelationship.model.StakeholderRelationship">
+    insert into stakeholder_relationship (id, company_stakeholder_link_id, source, 
+      target, is_data, is_valid, 
+      create_date, relationship,parent)
+    values (#{id,jdbcType=INTEGER}, #{companyStakeholderLinkId,jdbcType=BIGINT}, #{source,jdbcType=BIGINT}, 
+      #{target,jdbcType=BIGINT}, #{isData,jdbcType=INTEGER}, #{isValid,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{relationship,jdbcType=VARCHAR}), #{parent,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.daqing.modules.stakeholderrelationship.model.StakeholderRelationship">
+    insert into stakeholder_relationship
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="companyStakeholderLinkId != null">
+        company_stakeholder_link_id,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="target != null">
+        target,
+      </if>
+      <if test="isData != null">
+        is_data,
+      </if>
+      <if test="isValid != null">
+        is_valid,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="relationship != null">
+        relationship,
+      </if>
+      <if test="parent != null">
+        parent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyStakeholderLinkId != null">
+        #{companyStakeholderLinkId,jdbcType=BIGINT},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=BIGINT},
+      </if>
+      <if test="target != null">
+        #{target,jdbcType=BIGINT},
+      </if>
+      <if test="isData != null">
+        #{isData,jdbcType=INTEGER},
+      </if>
+      <if test="isValid != null">
+        #{isValid,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="relationship != null">
+        #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="parent != null">
+        #{parent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daqing.modules.stakeholderrelationship.model.StakeholderRelationship">
+    update stakeholder_relationship
+    <set>
+      <if test="companyStakeholderLinkId != null">
+        company_stakeholder_link_id = #{companyStakeholderLinkId,jdbcType=BIGINT},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=BIGINT},
+      </if>
+      <if test="target != null">
+        target = #{target,jdbcType=BIGINT},
+      </if>
+      <if test="isData != null">
+        is_data = #{isData,jdbcType=INTEGER},
+      </if>
+      <if test="isValid != null">
+        is_valid = #{isValid,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="relationship != null">
+        relationship = #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="parent != null">
+        parent = #{relationship,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daqing.modules.stakeholderrelationship.model.StakeholderRelationship">
+    update stakeholder_relationship
+    set company_stakeholder_link_id = #{companyStakeholderLinkId,jdbcType=BIGINT},
+      source = #{source,jdbcType=BIGINT},
+      target = #{target,jdbcType=BIGINT},
+      is_data = #{isData,jdbcType=INTEGER},
+      is_valid = #{isValid,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      relationship = #{relationship,jdbcType=VARCHAR},
+      parent = #{parent,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByLinkId" parameterType="map" resultMap="BaseResultMap">
+    SELECT  <include refid="Base_Column_List" />
+    FROM stakeholder_relationship
+    WHERE company_stakeholder_link_id = #{linkId}
+    <if test="isData != null">
+      AND is_data=#{isData}
+    </if>
+    AND is_valid = 1
+    ORDER BY is_data
+  </select>
+</mapper>

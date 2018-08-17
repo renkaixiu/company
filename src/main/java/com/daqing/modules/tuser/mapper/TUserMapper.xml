@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daqing.modules.tuser.dao.TUserMapper">
+  <resultMap id="BaseResultMap" type="com.daqing.modules.tuser.model.TUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="DOUBLE" property="uid" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="pass" jdbcType="VARCHAR" property="pass" />
+    <result column="pass_salt" jdbcType="VARCHAR" property="passSalt" />
+    <result column="fullName" jdbcType="VARCHAR" property="fullname" />
+    <result column="roleID" jdbcType="DOUBLE" property="roleid" />
+    <result column="createdDate" jdbcType="TIMESTAMP" property="createddate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, userName, pass, pass_salt, fullName, roleID, createdDate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.daqing.modules.tuser.model.TUser">
+    insert into t_user (id, uid, userName, 
+      pass, pass_salt, fullName, 
+      roleID, createdDate)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=DOUBLE}, #{username,jdbcType=VARCHAR}, 
+      #{pass,jdbcType=VARCHAR}, #{passSalt,jdbcType=VARCHAR}, #{fullname,jdbcType=VARCHAR}, 
+      #{roleid,jdbcType=DOUBLE}, #{createddate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.daqing.modules.tuser.model.TUser">
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="username != null">
+        userName,
+      </if>
+      <if test="pass != null">
+        pass,
+      </if>
+      <if test="passSalt != null">
+        pass_salt,
+      </if>
+      <if test="fullname != null">
+        fullName,
+      </if>
+      <if test="roleid != null">
+        roleID,
+      </if>
+      <if test="createddate != null">
+        createdDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=DOUBLE},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="pass != null">
+        #{pass,jdbcType=VARCHAR},
+      </if>
+      <if test="passSalt != null">
+        #{passSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null">
+        #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null">
+        #{roleid,jdbcType=DOUBLE},
+      </if>
+      <if test="createddate != null">
+        #{createddate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daqing.modules.tuser.model.TUser">
+    update t_user
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=DOUBLE},
+      </if>
+      <if test="username != null">
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="pass != null">
+        pass = #{pass,jdbcType=VARCHAR},
+      </if>
+      <if test="passSalt != null">
+        pass_salt = #{passSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null">
+        fullName = #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null">
+        roleID = #{roleid,jdbcType=DOUBLE},
+      </if>
+      <if test="createddate != null">
+        createdDate = #{createddate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daqing.modules.tuser.model.TUser">
+    update t_user
+    set uid = #{uid,jdbcType=DOUBLE},
+      userName = #{username,jdbcType=VARCHAR},
+      pass = #{pass,jdbcType=VARCHAR},
+      pass_salt = #{passSalt,jdbcType=VARCHAR},
+      fullName = #{fullname,jdbcType=VARCHAR},
+      roleID = #{roleid,jdbcType=DOUBLE},
+      createdDate = #{createddate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+   SELECT <include refid="Base_Column_List" /> FROM t_user
+  </select>
+</mapper>

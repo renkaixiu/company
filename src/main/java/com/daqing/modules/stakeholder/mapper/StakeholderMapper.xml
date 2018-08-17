@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daqing.modules.stakeholder.dao.StakeholderMapper">
+  <resultMap id="BaseResultMap" type="com.daqing.modules.stakeholder.model.Stakeholder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="stakeholder_name" jdbcType="VARCHAR" property="stakeholderName" />
+    <result column="is_valid" jdbcType="INTEGER" property="isValid" />
+    <result column="is_internal" jdbcType="INTEGER" property="isInternal" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, stakeholder_name, is_valid, is_internal, create_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stakeholder
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from stakeholder
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.daqing.modules.stakeholder.model.Stakeholder">
+    insert into stakeholder (id, stakeholder_name, is_valid, 
+      is_internal, create_date)
+    values (#{id,jdbcType=BIGINT}, #{stakeholderName,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, 
+      #{isInternal,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.daqing.modules.stakeholder.model.Stakeholder">
+    insert into stakeholder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="stakeholderName != null">
+        stakeholder_name,
+      </if>
+      <if test="isValid != null">
+        is_valid,
+      </if>
+      <if test="isInternal != null">
+        is_internal,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="stakeholderName != null">
+        #{stakeholderName,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null">
+        #{isValid,jdbcType=INTEGER},
+      </if>
+      <if test="isInternal != null">
+        #{isInternal,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daqing.modules.stakeholder.model.Stakeholder">
+    update stakeholder
+    <set>
+      <if test="stakeholderName != null">
+        stakeholder_name = #{stakeholderName,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null">
+        is_valid = #{isValid,jdbcType=INTEGER},
+      </if>
+      <if test="isInternal != null">
+        is_internal = #{isInternal,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daqing.modules.stakeholder.model.Stakeholder">
+    update stakeholder
+    set stakeholder_name = #{stakeholderName,jdbcType=VARCHAR},
+      is_valid = #{isValid,jdbcType=INTEGER},
+      is_internal = #{isInternal,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from stakeholder
+    where is_valid = 1
+  </select>
+</mapper>

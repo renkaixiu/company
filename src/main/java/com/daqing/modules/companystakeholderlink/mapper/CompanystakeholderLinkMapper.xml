@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daqing.modules.companystakeholderlink.dao.CompanystakeholderLinkMapper">
+  <resultMap id="BaseResultMap" type="com.daqing.modules.companystakeholderlink.model.CompanystakeholderLink">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="stakeholder_id" jdbcType="BIGINT" property="stakeholderId" />
+    <result column="is_valid" jdbcType="INTEGER" property="isValid" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, company_id, stakeholder_id, is_valid, create_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from company_stakeholder_link
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from company_stakeholder_link
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.daqing.modules.companystakeholderlink.model.CompanystakeholderLink">
+    insert into company_stakeholder_link (id, company_id, stakeholder_id, 
+      is_valid, create_date)
+    values (#{id,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{stakeholderId,jdbcType=BIGINT}, 
+      #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.daqing.modules.companystakeholderlink.model.CompanystakeholderLink">
+    insert into company_stakeholder_link
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="stakeholderId != null">
+        stakeholder_id,
+      </if>
+      <if test="isValid != null">
+        is_valid,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="stakeholderId != null">
+        #{stakeholderId,jdbcType=BIGINT},
+      </if>
+      <if test="isValid != null">
+        #{isValid,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daqing.modules.companystakeholderlink.model.CompanystakeholderLink">
+    update company_stakeholder_link
+    <set>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="stakeholderId != null">
+        stakeholder_id = #{stakeholderId,jdbcType=BIGINT},
+      </if>
+      <if test="isValid != null">
+        is_valid = #{isValid,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daqing.modules.companystakeholderlink.model.CompanystakeholderLink">
+    update company_stakeholder_link
+    set company_id = #{companyId,jdbcType=BIGINT},
+      stakeholder_id = #{stakeholderId,jdbcType=BIGINT},
+      is_valid = #{isValid,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByCompanyId" parameterType="long" resultMap="BaseResultMap">
+    SELECT
+    csl.id,
+    csl.company_id,
+    csl.stakeholder_id,
+    s.stakeholder_name as stakeholderName,
+    s.is_internal as isInternal
+    from company_stakeholder_link csl
+    LEFT JOIN stakeholder s ON csl.stakeholder_id = s.id
+    WHERE csl.is_valid = 1 AND s.is_valid = 1
+    AND csl.company_id = #{companyId}
+  </select>
+  <select id="countExist" parameterType="com.daqing.modules.companystakeholderlink.model.CompanystakeholderLink" resultType="int">
+    SELECT count(1) FROM company_stakeholder_link
+    WHERE is_valid = 1
+    AND company_id = #{companyId}
+     AND stakeholder_id=#{stakeholderId}
+  </select>
+
+</mapper>
