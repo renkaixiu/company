@@ -14,4 +14,5 @@ public interface CompanyService {
   Company load(Long id);
   Company selectByName(String companyName);
   String insertRelationValue(List<Map> valueList,String stakeholder,String internal,String companyId);
+  String updateRelationValue(List<Map> valueList,String stakeholder,String internal,String companyId,String stakeholderId,String linkId);
 }

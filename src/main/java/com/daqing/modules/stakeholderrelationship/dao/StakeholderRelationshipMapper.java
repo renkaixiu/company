@@ -20,4 +20,6 @@ public interface StakeholderRelationshipMapper {
     int updateByPrimaryKey(StakeholderRelationship record);
 
     List<StakeholderRelationship> selectByLinkId(Map map);
+
+    List<StakeholderRelationship> countDataByCompanyId(Map map);
 }

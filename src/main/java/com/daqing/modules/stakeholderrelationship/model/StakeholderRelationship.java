@@ -21,6 +21,14 @@ public class StakeholderRelationship {
 
     private String relationship;
 
+    private String stakeholderName;
+
+    private Long stakeholderId;
+
+    private String sumData;
+
+    private Integer isInternal;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +99,37 @@ public class StakeholderRelationship {
 
     public void setParent(Integer parent) {
         this.parent = parent;
+    }
+
+    public String getStakeholderName() {
+        return stakeholderName;
+    }
+
+    public void setStakeholderName(String stakeholderName) {
+        this.stakeholderName = stakeholderName;
+    }
+
+    public Long getStakeholderId() {
+        return stakeholderId;
+    }
+
+    public void setStakeholderId(Long stakeholderId) {
+        this.stakeholderId = stakeholderId;
+    }
+
+    public String getSumData() {
+        return sumData;
+    }
+
+    public void setSumData(String sumData) {
+        this.sumData = sumData;
+    }
+
+    public Integer getIsInternal() {
+        return isInternal;
+    }
+
+    public void setIsInternal(Integer isInternal) {
+        this.isInternal = isInternal;
     }
 }

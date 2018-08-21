@@ -110,10 +110,21 @@ $(function(){
         },
             elements: result
         });
+        console.log(result);
 
         cy.on('tap', 'node', function(evt){
             var node = evt.target;
+            if(node._private.data.label == 'company'){
+                return false;
+            }
             var linkId = node._private.data.linkId;
+            $('#boxType').val('2');
+            var btnHtml = '\
+                 <a class="confirm" href="javascript:;">Save</a>\
+                        <a class="cancle" href="javascript:;">Cancle</a>\
+                        <a class="del" linkId="'+linkId+'"  href="javascript:;">Delete</a>\
+                ';
+            $('.shadow-btns').html(btnHtml);
             $.ajax({
                 type:"post",
                 url:"http://localhost:8080/company/getRelationValue",
@@ -126,6 +137,8 @@ $(function(){
                     if (data.code == 1){
                         $('#lineBox').html('');
                         var html = '\
+                        <input type="hidden" id="stakeholdersId" value="'+data.stakeholderId+'" >\
+                         <input type="hidden" id="linkId" value="'+node._private.data.linkId+'" >\
                            <input class="s-input" placeholder="input Stakeholders" id="stakeholderName" value="'+data.stakeholderName+'" type="text"/>\
                              <div class="screen_div fl">\
                                 <div name="status" id="intrenal" class="select w90 fl" style="width: 200px;">\
@@ -154,8 +167,8 @@ $(function(){
                         $.each(data.relationshipList, function (i, n) {
                             html += '\
                                 <div class="form" style="height: auto">\
-                                   <input placeholder="input indicators" class="s-input value-input" value="'+n.relationship+'" type="text"/>\
-                                   <input placeholder="value"  class="s-input data-input"  value="'+n.data+'" placeholder="value" type="text"/>\
+                                   <input placeholder="input value" valueId="'+n.relationshipId+'" class="s-input value-input" value="'+n.relationship+'" type="text"/>\
+                                   <input placeholder="data" dataId="'+n.dataId+'" class="s-input data-input"  value="'+n.data+'" type="text"/>\
                                    <div class="screen_div fl">\
                                    <div name="status" id="resourcesType2" class="select w90 fl" style="width: 200px;">\
                                    <ul style="right: 0;">\
@@ -182,6 +195,7 @@ $(function(){
                                    </div> \
                                ';
                         });
+                        $('.shadow-title').html('Update Stakeholders');
                         $('#lineBox').html(html);
                         $('.shadow-box').show();
                         $('.shadow-line').show();

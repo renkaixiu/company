@@ -35,4 +35,8 @@ public class CompanystakeholderLinkServiceImpl implements CompanystakeholderLink
     public CompanystakeholderLink load(Long id){
         return companystakeholderLinkMapper.selectByPrimaryKey(id);
     }
+    @Override
+    public void update(CompanystakeholderLink companystakeholderLink){
+         companystakeholderLinkMapper.updateByPrimaryKeySelective(companystakeholderLink);
+    }
 }

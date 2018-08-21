@@ -1,8 +1,11 @@
+/*
 package com.daqing.modules.tuser.controller;
 
+*/
 /**
  * Created by dongao on 2018/7/24.
- */
+ *//*
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -12,6 +15,7 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 
+*/
 /**
  * 项目名称：测试项目
  * 类  名  称：Base64ToImg
@@ -23,13 +27,16 @@ import sun.misc.BASE64Encoder;
  * 修改备注：
  *
  * @version 1.0
- */
+ *//*
+
 
 public class Base64ToImg {
 
     public static void main(String[] args) {
-       /* String img = getImg("\\\\http://my.zhaopin.com/pic/2013/7/29/5935CF5D3B9349CAA95B66FD189FC5BA.jpg");//存放编码
-        GenerateImg(img, "E://1.jpg");*/
+       */
+/* String img = getImg("\\\\http://my.zhaopin.com/pic/2013/7/29/5935CF5D3B9349CAA95B66FD189FC5BA.jpg");//存放编码
+        GenerateImg(img, "E://1.jpg");*//*
+
         System.out.println(getImg("D://1.jpg"));
 
     }
@@ -80,3 +87,4 @@ public class Base64ToImg {
     }
 }
 
+*/

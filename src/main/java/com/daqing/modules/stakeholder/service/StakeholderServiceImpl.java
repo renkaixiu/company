@@ -27,4 +27,8 @@ public class StakeholderServiceImpl implements StakeholderService {
     public Stakeholder load(Long id){
         return stakeholderMapper.selectByPrimaryKey(id);
     }
+    @Override
+    public void update(Stakeholder stakeholder){
+        stakeholderMapper.updateByPrimaryKeySelective(stakeholder);
+    }
 }

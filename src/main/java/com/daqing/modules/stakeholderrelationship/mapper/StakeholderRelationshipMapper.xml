@@ -120,7 +120,7 @@
         relationship = #{relationship,jdbcType=VARCHAR},
       </if>
       <if test="parent != null">
-        parent = #{relationship,jdbcType=VARCHAR},
+        parent = #{parent,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -146,5 +146,26 @@
     </if>
     AND is_valid = 1
     ORDER BY is_data
+  </select>
+  <select id="countDataByCompanyId" parameterType="map" resultMap="BaseResultMap">
+    SELECT
+    SUM(relationship) as sumData,
+    link.stakeholder_id as stakeholderId,
+    s.stakeholder_name as stakeholderName,
+    ship.company_stakeholder_link_id,
+    s.is_internal,
+    ship.source,
+    ship.target
+    FROM stakeholder_relationship ship
+    LEFT JOIN company_stakeholder_link link ON ship.company_stakeholder_link_id = link.id
+    LEFT JOIN stakeholder s ON link.stakeholder_id = s.id
+    WHERE
+     ship.is_data=1
+    AND link.company_id = #{companyId}
+    AND ship.is_valid = 1
+    AND link.is_valid = 1
+    AND s.is_valid = 1
+	GROUP BY ship.company_stakeholder_link_id,ship.source
+	ORDER BY is_data
   </select>
 </mapper>

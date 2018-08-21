@@ -1,3 +1,4 @@
+/*
 package com.daqing.modules.tuser.controller;
 
 
@@ -67,15 +68,18 @@ public class WordTest {
                 "（5）12月31日，甲公司持有的B公司股票的公允价值为40万元，属于公允价值的正常波动。丙公司本年度实现净利润200万元，甲公司持有丙公司股票的公允价值为1000万元。 <br />\n" +
                 "要求：根据上述资料，不考虑其他因素，分析回答下列小题（答案中金额单位用万元表示）。</p>");
         dataMap.put("questionContent", "<p>增值税扣缴义务发生时间为纳税人支付货款的当天。（&nbsp;&nbsp;&nbsp; ）</p>");
-       /* dataMap.put("month", "2");
+       */
+/* dataMap.put("month", "2");
         dataMap.put("day", "13");
         dataMap.put("auditor", "鑫");
         dataMap.put("phone", "xxxxxxxxxxxxx");
-        dataMap.put("weave", "文涛");*/
+        dataMap.put("weave", "文涛");*//*
+
 //      dataMap.put("number", 1);
 //      dataMap.put("content", "内容"+2);
 
-      /*  List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+      */
+/*  List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
         for (int i = 0; i < 10; i++) {
             Map<String,Object> map = new HashMap<String,Object>();
             map.put("number", i);
@@ -84,7 +88,9 @@ public class WordTest {
         }
 
 
-        dataMap.put("list", list);*/
+        dataMap.put("list", list);*//*
+
     }
 }
 
+*/

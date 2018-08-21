@@ -11,4 +11,5 @@ public interface StakeholderService {
     List<Stakeholder> selectAll();
     Long save(Stakeholder stakeholder);
     Stakeholder load(Long id);
+    void update(Stakeholder stakeholder);
 }

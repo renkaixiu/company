@@ -29,4 +29,12 @@ public class StakeholderRelationshipServiceImpl implements StakeholderRelationsh
     public StakeholderRelationship load(Integer id){
         return stakeholderRelationshipMapper.selectByPrimaryKey(id);
     }
+    @Override
+    public  void update(StakeholderRelationship stakeholderRelationship){
+        stakeholderRelationshipMapper.updateByPrimaryKeySelective(stakeholderRelationship);
+    }
+    @Override
+    public  List<StakeholderRelationship> countDataByCompanyId(Map map){
+        return stakeholderRelationshipMapper.countDataByCompanyId(map);
+    }
 }

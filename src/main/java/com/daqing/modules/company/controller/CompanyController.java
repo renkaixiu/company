@@ -223,8 +223,10 @@ public class CompanyController {
                     Map relationMap = new HashMap();
                     if (relationship.getIsData() == 1){//data关系
                         relationMap.put("data",relationship.getRelationship());
+                        relationMap.put("dataId",relationship.getId());
                         StakeholderRelationship dataShip = stakeholderRelationshipService.load(relationship.getParent());
                         relationMap.put("relationship",dataShip.getRelationship());
+                        relationMap.put("relationshipId",dataShip.getId());
                         if (relationship.getSource().equals(companystakeholderLink.getCompanyId())){
                             relationMap.put("to","1");
                         }else{
@@ -235,6 +237,7 @@ public class CompanyController {
                 }
             }
             resMap.put("stakeholderName",stakeholder.getStakeholderName());
+            resMap.put("stakeholderId",stakeholder.getId());
             resMap.put("isInternal",stakeholder.getIsInternal());
             resMap.put("relationshipList",resultList);
             resMap.put("code","1");
@@ -244,5 +247,109 @@ public class CompanyController {
             resMap.put("code","0");
             return JSONUtils.toJSONString(resMap);
         }
+    }
+    @RequestMapping("/updateRelationValue")
+    @ResponseBody
+    public String updateRelationValue(HttpServletRequest request) {
+        Map resMap = new HashMap();
+        try {
+            String valueData = request.getParameter("valueData");
+            String stakeholder = request.getParameter("stakeholder");
+            String stakeholderId = request.getParameter("stakeholderId");
+            String internal = request.getParameter("internal");
+            String companyId = request.getParameter("companyId");
+            String linkId = request.getParameter("linkId");
+            List<Map> valueList = (List<Map>)JSONUtils.parse(valueData);
+            String code = companyService.updateRelationValue(valueList,stakeholder,internal,companyId,stakeholderId,linkId);
+            if ("1".equals(code)){
+                resMap.put("code","1");
+                resMap.put("msg","success");
+            }else{
+                resMap.put("code","0");
+                resMap.put("msg","error");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            resMap.put("code","0");
+            resMap.put("msg","error");
+        }
+        return JSONUtils.toJSONString(resMap);
+    }
+
+    @RequestMapping("/getTotalData")
+    @ResponseBody
+    public String getTotalData(HttpServletRequest request) {
+        String companyId = request.getParameter("companyId");
+        Company company = companyService.load(Long.valueOf(companyId));
+        List<Map> nodesList = new ArrayList<Map>();
+        List<Map> edgesList = new ArrayList<Map>();
+        Map resultMap = new HashMap();
+
+        Map paramMap = new HashMap();
+        paramMap.put("companyId",companyId);
+        List<StakeholderRelationship> relationshipList = stakeholderRelationshipService.countDataByCompanyId(paramMap);
+
+        Map companyNodeMap = new HashMap();
+        companyNodeMap.put("id", company.getId());
+        companyNodeMap.put("title", company.getCompanyName());
+        companyNodeMap.put("label", "company");
+        Map companyDataMap = new HashMap();
+        companyDataMap.put("data", companyNodeMap);
+        Map posMap = new HashMap();
+        posMap.put("x","200");
+        posMap.put("y","200");
+        companyDataMap.put("position", posMap);
+        nodesList.add(companyDataMap);
+        if (null != relationshipList){
+            for (StakeholderRelationship relationship:relationshipList){
+                Map nodeMap = new HashMap();
+                nodeMap.put("id", relationship.getStakeholderId());
+                nodeMap.put("linkId", relationship.getCompanyStakeholderLinkId());
+                nodeMap.put("class", "stakeholder");
+                nodeMap.put("title", relationship.getStakeholderName());
+                if (1 == relationship.getIsInternal()){
+                    nodeMap.put("label", "intrenal");
+                }else{
+                    nodeMap.put("label", "external");
+                }
+                Map nodeDataMap = new HashMap();
+                nodeDataMap.put("data", nodeMap);
+                nodesList.add(nodeDataMap);
+
+                Map edgesMap = new HashMap();
+                Map edgesDataMap = new HashMap();
+                edgesMap.put("source",relationship.getSource());
+                edgesMap.put("target",relationship.getTarget());
+                edgesMap.put("relationship",relationship.getSumData());
+                if (1== relationship.getIsInternal() && !(relationship.getSource().toString().equals(companyId))){
+                    //内部的
+                    edgesMap.put("label","in");
+                }else if (2== relationship.getIsInternal() && !(relationship.getSource().toString().equals(companyId))){
+                    //外部的
+                    edgesMap.put("label","out");
+                }else{
+                    edgesMap.put("label","comp");
+                }
+                edgesDataMap.put("data",edgesMap);
+                edgesList.add(edgesDataMap);
+            }
+        }
+
+        resultMap.put("nodes",nodesList);
+        resultMap.put("edges",edgesList);
+        String result = JSONUtils.toJSONString(resultMap);
+        return result;
+    }
+
+    @RequestMapping("/deleteLink")
+    @ResponseBody
+    public String deleteLink(HttpServletRequest request) {
+        Map resMap = new HashMap();
+        String linkId = request.getParameter("linkId");
+        CompanystakeholderLink companystakeholderLink = companystakeholderLinkService.load(Long.valueOf(linkId));
+        companystakeholderLink.setIsValid(0);
+        companystakeholderLinkService.update(companystakeholderLink);
+        resMap.put("code","1");
+        return JSONUtils.toJSONString(resMap);
     }
 }

@@ -14,4 +14,6 @@ public interface StakeholderRelationshipService {
     List<StakeholderRelationship> selectByLinkId(Map map);
     Integer save(StakeholderRelationship stakeholderRelationship);
     StakeholderRelationship load(Integer id);
+    void update(StakeholderRelationship stakeholderRelationship);
+    List<StakeholderRelationship> countDataByCompanyId(Map map);
 }

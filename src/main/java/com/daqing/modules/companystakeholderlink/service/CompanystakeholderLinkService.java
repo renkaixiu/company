@@ -13,4 +13,5 @@ public interface CompanystakeholderLinkService {
     List<CompanystakeholderLink> selectByCompanyId(Long companyId);
     int countExist(CompanystakeholderLink companystakeholderLink);
     CompanystakeholderLink load(Long id);
+    void update(CompanystakeholderLink companystakeholderLink);
 }

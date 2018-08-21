@@ -85,7 +85,7 @@ public class TUserController {
         return result;
     }
 
-    @RequestMapping("exportExcel")
+/*    @RequestMapping("exportExcel")
     public void exportExcel(HttpServletResponse response) throws IOException{
         //创建工作簿
         XSSFWorkbook xssfWorkBook = new XSSFWorkbook();
@@ -168,9 +168,9 @@ public class TUserController {
         xssfWorkBook.write(ouputStream);
         ouputStream.flush();
         ouputStream.close();
-    }
+    }*/
 
-    @RequestMapping("/ep")
+/*    @RequestMapping("/ep")
     public void ep(HttpServletResponse response) throws IOException{
         //创建工作簿
         HSSFWorkbook hssfWorkBook = new HSSFWorkbook();
@@ -190,7 +190,7 @@ public class TUserController {
         hssfWorkBook.write(ouputStream);
         ouputStream.flush();
         ouputStream.close();
-    }
+    }*/
 
 
 
